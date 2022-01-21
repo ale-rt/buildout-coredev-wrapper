@@ -1,0 +1,7 @@
+/etc/*
+/py3
+/src
+/var
+/.plone.versioncheck.tracked.json
+/selenium-screenshot-*.png
+/documentation

@@ -1,7 +1,8 @@
+/.plone.versioncheck.tracked.json
+/custom.cfg
+/documentation
 /etc/*
 /py3
+/selenium-screenshot-*.png
 /src
 /var
-/.plone.versioncheck.tracked.json
-/selenium-screenshot-*.png
-/documentation

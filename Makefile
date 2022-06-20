@@ -4,12 +4,11 @@ all: .installed.cfg
 etc/buildout.coredev:
 	mkdir -p etc && cd etc && git clone git@github.com:plone/buildout.coredev.git
 
-py39/bin/buildout: py39/bin/pip3.9 etc/buildout.coredev etc/buildout.coredev/requirements.txt
-	./py39/bin/pip3.9 install -IUr etc/buildout.coredev/requirements.txt
-	./py39/bin/pip3.9 install pdbpp
+py3/bin/buildout: py3/bin/pip3 etc/buildout.coredev etc/buildout.coredev/requirements.txt
+	./py3/bin/pip3 install -IUr requirements.txt
 
-py39/bin/pip3.9:
-	python3.9 -m venv py39
+py3/bin/pip3:
+	python3 -m venv py3
 
-.installed.cfg: py39/bin/buildout etc/buildout.coredev $(wildcard *.cfg etc/buildout.coredev/*.cfg)
-	./py39/bin/buildout
+.installed.cfg: py3/bin/buildout etc/buildout.coredev $(wildcard *.cfg etc/buildout.coredev/*.cfg)
+	./py3/bin/buildout

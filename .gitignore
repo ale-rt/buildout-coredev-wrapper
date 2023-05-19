@@ -1,8 +1,10 @@
 /.plone.versioncheck.tracked.json
-/custom.cfg
+/.venv
+/buildout.cfg
 /documentation
-/etc/*
-/py3
+/etc/buildout/base.cfg
+/etc/buildout/buildout.coredev
+/Makefile.config
 /selenium-screenshot-*.png
 /src
 /var

@@ -1,14 +1,36 @@
+include Makefile.config
+
 .PHONY: all
 all: .installed.cfg
 
-etc/buildout.coredev:
-	mkdir -p etc && cd etc && git clone git@github.com:plone/buildout.coredev.git
+etc/buildout/base.cfg:
+	@echo "Creating etc/buildout/base.cfg"
+	@echo "# Make generated, do not edit, edit custom.cfg instead" > etc/buildout/base.cfg
+	@echo "[buildout]" >> etc/buildout/base.cfg
+	@echo "extends ="  >> etc/buildout/base.cfg
+	@echo "    buildout.coredev/$(BUILDOUT_MAIN_FILE)" >> etc/buildout/base.cfg
+	@echo "    overrides.cfg" >> etc/buildout/base.cfg
 
-py3/bin/buildout: py3/bin/pip3 etc/buildout.coredev etc/buildout.coredev/requirements.txt
-	./py3/bin/pip3 install -IUr requirements.txt
+buildout.cfg:
+	@echo "Creating buildout.cfg"
+	@echo "[buildout]" >> buildout.cfg
+	@echo "extends ="  >> buildout.cfg
+	@echo "    etc/buildout/base.cfg" >> buildout.cfg
+	@echo "" >> buildout.cfg
+	@echo "[instance]" >> buildout.cfg
+	@echo "http-address = $(HTTP_ADDRESS)" >> buildout.cfg
 
-py3/bin/pip3:
-	python3 -m venv py3
+etc/buildout/buildout.coredev:
+	mkdir -p etc/buildout
+	cd etc/buildout && git clone --branch $(PLONE_COREDEV_BRANCH) git@github.com:plone/buildout.coredev.git
 
-.installed.cfg: py3/bin/buildout etc/buildout.coredev $(wildcard *.cfg etc/buildout.coredev/*.cfg)
-	./py3/bin/buildout
+.venv/bin/pip3s:
+	@echo "Creating a virtualenv using $(which python${PYTHON_VERSION})"
+	echo $(which python${PYTHON_VERSION}) -m venv .venv
+
+.venv/bin/buildout: .venv/bin/pip3 etc/buildout/buildout.coredev etc/buildout/buildout.coredev/requirements.txt etc/buildout/base.cfg buildout.cfg
+	./.venv/bin/pip3 uninstall -qy setuptools zc.buildout
+	./.venv/bin/pip3 install -IUr requirements.txt
+
+.installed.cfg: .venv/bin/buildout etc/buildout/buildout.coredev $(wildcard *.cfg etc/buildout/*.cfg etc/buildout/buildout.coredev/*.cfg)
+	./.venv/bin/buildout

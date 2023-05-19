@@ -1,0 +1,27 @@
+#!/bin/bash
+
+read -p "Enter Python version (default 3.11): " PYTHON_VERSION
+PYTHON_VERSION=${PYTHON_VERSION:-3.11}
+
+read -p "Enter Plone coredev branch (default 6.1): " PLONE_COREDEV_BRANCH
+PLONE_COREDEV_BRANCH=${PLONE_COREDEV_BRANCH:-6.1}
+
+read -p "Enter Plone main buildout file (default buildout.cfg): " BUILDOUT_MAIN_FILE
+BUILDOUT_MAIN_FILE=${BUILDOUT_MAIN_FILE:-buildout.cfg}
+
+# ask for an HTTP address
+read -p "Enter HTTP address (default 8080): " HTTP_ADDRESS
+HTTP_ADDRESS=${HTTP_ADDRESS:-8080}
+
+# echo "PYTHON_VERSION = $PYTHON_VERSION" > Makefile.config
+# Write this to Makefile.config:
+cat << EOF > Makefile.config
+BUILDOUT_MAIN_FILE = $BUILDOUT_MAIN_FILE
+HTTP_ADDRESS = $HTTP_ADDRESS
+PLONE_COREDEV_BRANCH = $PLONE_COREDEV_BRANCH
+PYTHON_VERSION = $PYTHON_VERSION
+EOF
+
+# echo a success unicode character in green
+echo ""
+echo "Makefile.config written. You can edit it manually if you want to change something without running this script again."

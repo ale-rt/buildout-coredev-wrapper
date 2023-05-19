@@ -2,50 +2,27 @@
 
 This buildout wraps the coredev buildout.
 
-To use it, provide a `custom.cfg` with something like:
+Run it `./configure`, reply some basic questions.
 
-```ini
-[buildout]
-extends =
-    etc/buildout.coredev/buildout.cfg
-```
-and run `make`.
+Like:
 
-The file `custom.cfg` **must** provide the `extends` option.
+- Python version to use
+- Plone version to use
+- HTTP port to use
+- If you want to use the default `buildout.cfg` file or a plip branch
 
-If you want to use a PLIP branch use:
+Note that the path you provide has to be relative to the `buildout.coredev`
+directory, e.g.: `plips/plip-1234-foo-bar`.
 
-```ini
-[buildout]
-extends =
-    etc/buildout.coredev/plips/plip-filename.cfg
-```
+The configure script will create a `Makefile.config` file.
+You can edit it also manually or you can rerun `./configure` to change it.
 
-If you want to install the robot server be sure that your `custom.cfg` has something like:
+Then ran `make`.
 
-```ini
-[buildout]
-...
-parts +=
-    robot
-```
+It will bootstrap for you:
 
-If you want to change the port be sure that your `custom.cfg` has something like:
+- a Python virtual environment in the `.venv` directory
+- a `buildout.cfg` file
+- it will run buildout
 
-```ini
-...
-[instance]
-http-address = 8081
-```
-
-
-## How to specify the Python version to use
-
-By default the `Makefile` will try to use the `python3` executable found in the path.
-If you want to use a different version do something like:
-
-```
-python3.N -m venv py3
-```
-
-before running `make`.
+You can at this point edit the `buildout.cfg` file to add eggs, zcml, etc.

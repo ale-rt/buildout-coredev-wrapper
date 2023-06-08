@@ -25,8 +25,8 @@ etc/buildout/buildout.coredev:
 	cd etc/buildout && git clone --branch $(PLONE_COREDEV_BRANCH) git@github.com:plone/buildout.coredev.git
 
 .venv/bin/pip3:
-	@echo "Creating a virtualenv using $(which python${PYTHON_VERSION})"
-	echo $(which python${PYTHON_VERSION}) -m venv .venv
+	@echo "Creating a virtualenv using $$(which python${PYTHON_VERSION})"
+	$$(which python${PYTHON_VERSION}) -m venv .venv
 
 .venv/bin/buildout: .venv/bin/pip3 etc/buildout/buildout.coredev etc/buildout/buildout.coredev/requirements.txt etc/buildout/base.cfg buildout.cfg
 	./.venv/bin/pip3 uninstall -qy setuptools zc.buildout

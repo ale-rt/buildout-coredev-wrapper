@@ -24,7 +24,7 @@ etc/buildout/buildout.coredev:
 	mkdir -p etc/buildout
 	cd etc/buildout && git clone --branch $(PLONE_COREDEV_BRANCH) git@github.com:plone/buildout.coredev.git
 
-.venv/bin/pip3s:
+.venv/bin/pip3:
 	@echo "Creating a virtualenv using $(which python${PYTHON_VERSION})"
 	echo $(which python${PYTHON_VERSION}) -m venv .venv
 

@@ -11,11 +11,17 @@ etc/buildout/base.cfg:
 	@echo "    buildout.coredev/$(BUILDOUT_MAIN_FILE)" >> etc/buildout/base.cfg
 	@echo "    overrides.cfg" >> etc/buildout/base.cfg
 
-buildout.cfg:
+custom.cfg:
+	@echo "Creating custom.cfg"
+	@echo "# Put your custom settings here" > custom.cfg
+	@echo "[buildout]" >> custom.cfg
+
+buildout.cfg: custom.cfg etc/buildout/base.cfg
 	@echo "Creating buildout.cfg"
-	@echo "[buildout]" >> buildout.cfg
+	@echo "[buildout]" > buildout.cfg
 	@echo "extends ="  >> buildout.cfg
 	@echo "    etc/buildout/base.cfg" >> buildout.cfg
+	@echo "    custom.cfg" >> buildout.cfg
 	@echo "" >> buildout.cfg
 	@echo "[instance]" >> buildout.cfg
 	@echo "http-address = $(HTTP_ADDRESS)" >> buildout.cfg

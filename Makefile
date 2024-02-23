@@ -3,6 +3,10 @@ include Makefile.config
 .PHONY: all
 all: .installed.cfg
 
+.PHONY: pull
+pull: etc/buildout/buildout.coredev
+	cd etc/buildout/buildout.coredev && git pull
+
 etc/buildout/base.cfg:
 	@echo "Creating etc/buildout/base.cfg"
 	@echo "# Make generated, do not edit, edit custom.cfg instead" > etc/buildout/base.cfg

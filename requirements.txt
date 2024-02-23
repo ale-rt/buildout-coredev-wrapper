@@ -1,2 +1,1 @@
 -r etc/buildout/buildout.coredev/requirements.txt
-pdbpp

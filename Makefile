@@ -2,6 +2,7 @@ include Makefile.config
 
 .PHONY: all
 all: .installed.cfg
+	make pull
 
 .PHONY: pull
 pull: etc/buildout/buildout.coredev

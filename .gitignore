@@ -1,10 +1,16 @@
+/.installed.cfg
+/.mr.developer.cfg
 /.plone.versioncheck.tracked.json
 /.venv
+/bin
 /buildout.cfg
+/custom.cfg
+/develop-eggs
 /documentation
 /etc/buildout/base.cfg
 /etc/buildout/buildout.coredev
 /Makefile.config
+/parts
 /selenium-screenshot-*.png
 /src
 /var

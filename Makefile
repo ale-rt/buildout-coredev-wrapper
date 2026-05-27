@@ -1,12 +1,24 @@
 include Makefile.config
 
 .PHONY: all
-all: .installed.cfg
-	make pull
+all: help
+
+.PHONY: help
+help:
+	@gawk -vG=$$(tput setaf 2) -vR=$$(tput sgr0) ' \
+	  match($$0, "^(([^#:]*[^ :]) *:)?([^#]*)##([^#].+|)$$",a) { \
+	    if (a[2] != "") { printf "    make %s%-18s%s %s\n", G, a[2], R, a[4]; next }\
+	    if (a[3] == "") { print a[4]; next }\
+	    printf "\n%-36s %s\n","",a[4]\
+	  }' $(MAKEFILE_LIST)
 
 .PHONY: pull
-pull: etc/buildout/buildout.coredev
+pull: etc/buildout/buildout.coredev  ## Pull the latest changes from buildout.coredev
 	cd etc/buildout/buildout.coredev && git pull
+
+.PHONY: buildout
+buildout:.venv/bin/buildout  ## Run buildout to install the project dependencies
+	@./.venv/bin/buildout
 
 etc/buildout/base.cfg:
 	@echo "Creating etc/buildout/base.cfg"
